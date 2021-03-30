@@ -2,7 +2,7 @@ import data as DataPy
 
 
 def sum(values):
-    """sums all of the members in 'values' and returns the sum"""
+    """sums all of the members in 'values' and returns the sum."""
     CurrentSum = 0
     for i in range(len(values)):
         CurrentSum = CurrentSum + values[i]
@@ -10,12 +10,12 @@ def sum(values):
 
 
 def mean(values):
-    """gets the sum from the function above, calculate the average"""
+    """gets the sum from the function above, calculate the average."""
     return sum(values) / len(values)
 
 
 def median(values):
-    """ sorts the 'values' list and return the median (with the definition of median)"""
+    """ sorts the 'values' list and return the median (with the definition of median)."""
     length = len(values)
     values.sort()
     if length % 2 == 1:
@@ -32,7 +32,10 @@ def population_statistics(
     is_above,
     statistic_functions,
 ):
-    """ if is_above is True, prints the statistics given ('')"""
+    """if is_above is true, creates a list of the members in data[target], such that the matching data[treatment]>threshold.
+    else, creates a list of the members in data[target], such that the matching data[treatment]<=threshold.
+    then, prints the statistics given ('statistic_functions') of the created list, using data.py's 'print_details'
+    """
     values = [
         data[target][i]
         for i in range(len(data[target]))
