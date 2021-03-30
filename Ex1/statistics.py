@@ -36,12 +36,12 @@ def population_statistics(
     else, creates a list of the members in data[target], such that the matching data[treatment]<=threshold.
     then, prints the statistics given ('statistic_functions') of the created list, using data.py's 'print_details'
     """
-    values = [
-        data[target][i]
-        for i in range(len(data[target]))
-        if (
-            (is_above and data[treatment][i] > threshold)
-            or ((not is_above) and data[treatment][i] <= threshold)
-        )
-    ]
-    DataPy.print_details({target: values}, {target}, statistic_functions)
+    DataPy.print_details(
+        {
+            target: list(
+                filter(lambda elem: is_above ^ (elem <= threshold), data[target])
+            )
+        },
+        {target},
+        statistic_functions,
+    )
