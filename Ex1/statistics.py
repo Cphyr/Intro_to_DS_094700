@@ -32,7 +32,7 @@ def population_statistics(
     is_above,
     statistic_functions,
 ):
-    """ if """
+    """ if is_above is True, prints the statistics given ('')"""
     values = [
         data[target][i]
         for i in range(len(data[target]))
