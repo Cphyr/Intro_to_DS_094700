@@ -1,4 +1,4 @@
-import data as DataPy
+from data import *
 
 
 def sum(values):
@@ -36,12 +36,8 @@ def population_statistics(
     else, creates a list of the members in data[target], such that the matching data[treatment]<=threshold.
     then, prints the statistics given ('statistic_functions') of the created list, using data.py's 'print_details'
     """
-    DataPy.print_details(
-        {
-            target: list(
-                filter(lambda elem: is_above ^ (elem <= threshold), data[target])
-            )
-        },
+    print_details(
+        {target: list(filter(lambda x: is_above ^ (x <= threshold), data[target]))},
         {target},
         statistic_functions,
-    )
+    )  # it's exactly 120 chars (without tabs of course)
