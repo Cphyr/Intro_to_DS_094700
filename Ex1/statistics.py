@@ -1,11 +1,13 @@
 from data import *
+from copy import deepcopy
+from functools import reduce
 
 
 def sum(values):
     """sums all of the members in 'values' and returns the sum."""
     CurrentSum = 0
-    for i in range(len(values)):
-        CurrentSum = CurrentSum + values[i]
+    for x in values:
+        CurrentSum += x
     return CurrentSum
 
 
@@ -26,18 +28,39 @@ def median(values):
 def population_statistics(
     feature_description,
     data,
-    treatment,
-    target,
+    treat,
+    tar,
     threshold,
     is_above,
-    statistic_functions,
+    stat_funcs,
 ):
-    """if is_above is true, creates a list of the members in data[target], such that the matching data[treatment]>threshold.
-    else, creates a list of the members in data[target], such that the matching data[treatment]<=threshold.
-    then, prints the statistics given ('statistic_functions') of the created list, using data.py's 'print_details'
+    """if is_above is true, creates a list of the members in data[tar], such that the matching data[treat]>threshold.
+    else, creates a list of the members in data[tar], such that the matching data[treat]<=threshold.
+    then, prints the statistics given ('stat_funcs' AKA 'statistic_functions') of the created list, using data.py's 'print_details'
     """
+
+    dc = {
+        "spring": ("season", 0),
+        "summer": ("season", 1),
+        "autumn": ("season", 2),
+        "winter": ("season", 3),
+        "holiday": ("holiday", 1),
+        "weekend": ("weekend", 1),
+    }
+
+    # d = deepcopy(data)
+    # for x in filter(lambda i: i in dc.keys(), feature_description.split(" ")):
+    #    d = filter_by_feature(d, x[0], x[1])[0]
+
+    # d := the filtered data
+    d = reduce(
+        lambda ac, val: filter_by_feature(ac, val[0], val[1])[0],
+        filter(lambda i: i in dc.keys(), feature_description.split(" ")),
+        data,
+    )
+
     print_details(
-        {target: list(filter(lambda x: is_above ^ (x <= threshold), data[target]))},
-        {target},
-        statistic_functions,
-    )  # it's exactly 120 chars (without tabs of course)
+        {tar: [x for x, y in zip(d[tar], d[treat]) if (is_above ^ (y <= threshold))]},
+        [tar],
+        stat_funcs,
+    )  # it's exactly 115 chars (without tabs of course), hence, it's one line

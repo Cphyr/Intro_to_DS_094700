@@ -40,8 +40,8 @@ def filter_by_feature(data, feature, values):
 
 def print_details(data, features, statistic_functions):
     """prints the statistics given ('statistic_functions') for every member of given 'features' using statistics.py's functions """
-    for func in statistic_functions:
-        for feature in features:
-            print(
-                f"function: {func}, feature: {feature}, output: {func(values=data[feature])}"
-            )
+    for fe in features:
+        # feature: func1, func2, func3 ...
+        print(
+            f"{fe}: {', '.join(map(str, [func(data[feature]) for func in statistic_functions]))}"
+        )
