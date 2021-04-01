@@ -43,5 +43,5 @@ def print_details(data, features, statistic_functions):
     for func in statistic_functions:
         for feature in features:
             print(
-                f"function: {func}, feature: {feature}, output: {getattr(statistics, func)(values=data[feature])}"
+                f"function: {func}, feature: {feature}, output: {func(values=data[feature])}"
             )
