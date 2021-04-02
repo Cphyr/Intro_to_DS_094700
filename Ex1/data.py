@@ -43,5 +43,5 @@ def print_details(data, features, statistic_functions):
     for fe in features:
         # feature: func1, func2, func3 ...
         print(
-            f"{fe}: {', '.join(map(str, [func(data[feature]) for func in statistic_functions]))}"
+            f"{fe}: {', '.join([str(func(data[fe])) for func in statistic_functions])}"
         )

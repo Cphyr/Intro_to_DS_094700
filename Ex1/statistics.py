@@ -21,12 +21,12 @@ def median(values):
     length = len(values)
     values.sort()
     if length % 2 == 1:
-        return values[length / 2]
-    return (values[length / 2 - 1] + values[length / 2]) / 2
+        return values[length // 2]
+    return (values[length // 2 - 1] + values[length // 2]) / 2
 
 
 def population_statistics(
-    feature_description,
+    fea_des,
     data,
     treat,
     tar,
@@ -40,25 +40,27 @@ def population_statistics(
     """
 
     dc = {
-        "spring": ("season", 0),
-        "summer": ("season", 1),
-        "autumn": ("season", 2),
-        "winter": ("season", 3),
-        "holiday": ("holiday", 1),
-        "weekend": ("weekend", 1),
+        "spring": ("season", [0]),
+        "summer": ("season", [1]),
+        "autumn": ("season", [2]),
+        "winter": ("season", [3]),
+        "holiday": ("is_holiday", [1]),
+        "weekend": ("is_weekend", [1]),
+        "weekday": ("is_holiday", [0]),
     }
 
     # d = deepcopy(data)
-    # for x in filter(lambda i: i in dc.keys(), feature_description.split(" ")):
+    # for x in filter(lambda i: i in dc.keys(), fea_des.split(" ")):
     #    d = filter_by_feature(d, x[0], x[1])[0]
-
     # d := the filtered data
     d = reduce(
         lambda ac, val: filter_by_feature(ac, val[0], val[1])[0],
-        filter(lambda i: i in dc.keys(), feature_description.split(" ")),
+        [dc[i.lower()] for i in fea_des.split(" ") if i.lower() in dc.keys()],
         data,
     )
 
+    print(d["season"])
+    print(d["is_holiday"])
     print_details(
         {tar: [x for x, y in zip(d[tar], d[treat]) if (is_above ^ (y <= threshold))]},
         [tar],
