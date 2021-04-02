@@ -35,6 +35,7 @@ def filter_by_feature(data, feature, values):
         else:
             for key in data.keys():
                 data2[key].append(data[key][i])  # else, add it to data 2
+
     return data1, data2  # returns both of the dicts
 
 

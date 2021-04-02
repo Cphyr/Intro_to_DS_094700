@@ -1,6 +1,7 @@
 from data import *
 from copy import deepcopy
 from functools import reduce
+import pandas as pd
 
 
 def sum(values):
@@ -20,6 +21,7 @@ def median(values):
     """ sorts the 'values' list and return the median (with the definition of median)."""
     length = len(values)
     values.sort()
+
     if length % 2 == 1:
         return values[length // 2]
     return (values[length // 2 - 1] + values[length // 2]) / 2
@@ -53,14 +55,22 @@ def population_statistics(
     # for x in filter(lambda i: i in dc.keys(), fea_des.split(" ")):
     #    d = filter_by_feature(d, x[0], x[1])[0]
     # d := the filtered data
+
     d = reduce(
         lambda ac, val: filter_by_feature(ac, val[0], val[1])[0],
         [dc[i.lower()] for i in fea_des.split(" ") if i.lower() in dc.keys()],
         data,
     )
+    if is_above == False:
+        df = pd.DataFrame(data)
+        df.to_csv("data2.csv")
+        df = pd.DataFrame(d)
+        df.to_csv(f"{fea_des}.csv")
+    print(len(d["season"]))
+    print(len(d["is_holiday"]))
 
-    print(d["season"])
-    print(d["is_holiday"])
+    print(treat, tar)
+
     print_details(
         {tar: [x for x, y in zip(d[tar], d[treat]) if (is_above ^ (y <= threshold))]},
         [tar],

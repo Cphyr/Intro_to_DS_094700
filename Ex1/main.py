@@ -1,6 +1,7 @@
 import sys
 import statistics as st
 import data as dt
+from copy import deepcopy
 
 print("hello")
 
@@ -22,11 +23,13 @@ def main(argv):
     for mode in ["Summer", "Holiday", "All"]:
         print(f"{mode}:")
         if mode == "All":
-            dt.print_details(data, ["hum", "t1", "cnt"], [st.sum, st.mean, st.median])
+            dt.print_details(
+                deepcopy(data), ["hum", "t1", "cnt"], [st.sum, st.mean, st.median]
+            )
         else:
             val = dc[mode.lower()]
             dt.print_details(
-                dt.filter_by_feature(data, val[0], val[1])[0],
+                dt.filter_by_feature(deepcopy(data), val[0], val[1])[0],
                 ["hum", "t1", "cnt"],
                 [st.sum, st.mean, st.median],
             )
@@ -39,7 +42,7 @@ def main(argv):
     print("Winter holiday records:")
     st.population_statistics(
         "Winter holiday records",
-        data,
+        deepcopy(data),
         "t1",
         "cnt",
         threshold,
@@ -49,7 +52,7 @@ def main(argv):
     print("Winter weekday records:")
     st.population_statistics(
         "Winter weekday records",
-        data,
+        deepcopy(data),
         "t1",
         "cnt",
         threshold,
@@ -61,7 +64,7 @@ def main(argv):
     print("Winter holiday records:")
     st.population_statistics(
         "Winter holiday records",
-        data,
+        deepcopy(data),
         "t1",
         "cnt",
         threshold,
@@ -71,7 +74,7 @@ def main(argv):
     print("Winter weekday records:")
     st.population_statistics(
         "Winter weekday records",
-        data,
+        deepcopy(data),
         "t1",
         "cnt",
         threshold,
