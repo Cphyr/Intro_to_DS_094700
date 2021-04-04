@@ -1,6 +1,4 @@
 from data import *
-from copy import deepcopy
-from functools import reduce
 import pandas as pd
 
 
@@ -20,16 +18,16 @@ def mean(values):
 def median(values):
     """ sorts the 'values' list and return the median (with the definition of median)."""
     length = len(values)
-    values.sort()
+    sort_vals = sorted(values)
 
     if length % 2 == 1:
-        return values[length // 2]
-    return (values[length // 2 - 1] + values[length // 2]) / 2
+        return sort_vals[length // 2]
+    return (sort_vals[length // 2 - 1] + sort_vals[length // 2]) / 2
 
 
 def population_statistics(
     fea_des,
-    data,
+    dt,
     treat,
     tar,
     threshold,
@@ -51,28 +49,20 @@ def population_statistics(
         "weekday": ("is_holiday", [0]),
     }
 
-    # d = deepcopy(data)
-    # for x in filter(lambda i: i in dc.keys(), fea_des.split(" ")):
-    #    d = filter_by_feature(d, x[0], x[1])[0]
-    # d := the filtered data
+    # filters the needed features from data (dt)
+    for x in filter(lambda i: i.lower() in dc.keys(), fea_des.split(" ")):
+        dt = filter_by_feature(dt, dc[x.lower()][0], dc[x.lower()][1])[0]
 
-    d = reduce(
-        lambda ac, val: filter_by_feature(ac, val[0], val[1])[0],
-        [dc[i.lower()] for i in fea_des.split(" ") if i.lower() in dc.keys()],
-        data,
-    )
-    if is_above == False:
-        df = pd.DataFrame(data)
-        df.to_csv("data2.csv")
-        df = pd.DataFrame(d)
-        df.to_csv(f"{fea_des}.csv")
-    print(len(d["season"]))
-    print(len(d["is_holiday"]))
-
-    print(treat, tar)
+    # Not allowed, but much prettier code
+    # d = reduce(
+    #     lambda ac, val: filter_by_feature(ac, val[0], val[1])[0],
+    #     [dc[i.lower()] for i in fea_des.split(" ") if i.lower() in dc.keys()],
+    #     data,
+    # )
 
     print_details(
-        {tar: [x for x, y in zip(d[tar], d[treat]) if (is_above ^ (y <= threshold))]},
+        {tar: [x for x, y in zip(dt[tar], dt[treat]) if (
+            is_above ^ (y <= threshold))]},
         [tar],
         stat_funcs,
     )  # it's exactly 115 chars (without tabs of course), hence, it's one line
