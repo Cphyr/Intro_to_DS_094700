@@ -1,6 +1,6 @@
-import sys
-import statistics as st
 import data as dt
+import statistics as st
+import sys
 
 
 def main(argv):
