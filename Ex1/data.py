@@ -3,18 +3,38 @@ import statistics
 
 
 def load_data(path, features):
-    "creates a dictionary 'data' which was returned using pandas' to_dict"
+    """
+    Inputs - 
+        path :: Str():
+            contains the path to the csv file
+        fetures :: Str():
+            the only fields that should be loaded from the csv
+
+    Outputs - 
+        returns a dictionary of the dataset
+    """
     df = pandas.read_csv(path)
     data = df.to_dict(orient="list")
     return data
 
 
 def filter_by_feature(data, feature, values):
-    """creates two Dictionaries 'data1' 'data2'.
-    for every key in data, creates a list as the value of the matching key in data1 and data2.
-    for every member in the values of every key in data: if the matching data[feature] is in values, appends him to the value of the key in data1.
-    else appends him to the value of the key in data2.
-    return data1 and data2
+    """
+    Inputs - 
+        data - Dict():
+            All the data
+            data.keys() - Str()
+            data.values() - Iterable() :: Order()
+        feture - Str():
+            * Must be in data.keys()
+            feature to sort by
+        values - Iterable():
+            List of values to search for
+    Outputs - 
+        2 dicts 'data1', 'data2'.
+        data1 - takes only the samples in <data> that the value of the <feature>
+        in the sample is in <values>
+        data2 - the complement of data1
     """
     NumberOfLines = len(data[feature])  # Num of lines
 
@@ -40,7 +60,22 @@ def filter_by_feature(data, feature, values):
 
 
 def print_details(data, features, statistic_functions):
-    """prints the statistics given ('statistic_functions') for every member of given 'features' using statistics.py's functions """
+    """
+    Inputs - 
+        data - Dict():
+            All the data
+            data.keys() - Str()
+            data.values() - Iterable() :: Order()
+        fetures - Iterable() :: Str():
+            * All the elems in features must be in data.keys() 
+            features to run the statistic_functions on
+        statistics_functions - Iterable() :: Obj-funcs in statistics.py:
+            Function to run
+
+    Outputs - 
+        prints the statistics of each and every feature 
+        using funcyions in statistics.py.
+    """
     for fe in features:
         # feature: func1, func2, func3 ...
         print(
