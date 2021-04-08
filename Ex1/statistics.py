@@ -3,22 +3,47 @@ import pandas as pd
 
 
 def sum(values):
-    """sums all of the members in 'values' and returns the sum."""
-    CurrentSum = 0
-    for x in values:
-        CurrentSum += x
-    return CurrentSum
+    """
+    Inputs - 
+        values - List() :: Order():
+            List of values which can be sumed
+
+    Outputs - 
+        The sum over all the elements in values 
+    """
+    sum_val = 0
+    # Loop over the elements in values
+    for val in values:
+        sum_val += val  # add the curr elem to the sum
+    return sum_val
 
 
 def mean(values):
-    """gets the sum from the function above, calculate the average."""
+    """
+    Inputs - 
+        values - List() :: Order():
+            List of values which can be sumed
+
+    Outputs - 
+        The mean over all the elements in values 
+
+    Externall man-made functions - 
+        sum() - return the sum of the elements in values
+    """
     return sum(values) / len(values)
 
 
 def median(values):
-    """ sorts the 'values' list and return the median (with the definition of median)."""
+    """
+    Inputs - 
+        values - List() :: Order():
+            List of values which can be sumed
+
+    Outputs - 
+        The median of the elements in values 
+    """
     length = len(values)
-    sort_vals = sorted(values)
+    sort_vals = sorted(values)  # get a new, sorted, list
 
     if length % 2 == 1:
         return sort_vals[length // 2]
@@ -34,9 +59,41 @@ def population_statistics(
     is_above,
     stat_funcs,
 ):
-    """if is_above is true, creates a list of the members in data[tar], such that the matching data[treat]>threshold.
-    else, creates a list of the members in data[tar], such that the matching data[treat]<=threshold.
-    then, prints the statistics given ('stat_funcs' AKA 'statistic_functions') of the created list, using data.py's 'print_details'
+    """
+    Inputs - 
+        fea_des - Str():
+            Description of the data needed for the
+            calculations of the stat_funcs.
+            Usge - to filter data by (feature, values) pairs
+        dt - Dict():
+            All the data
+            dt.keys() - Str()
+            dt.values() - List() :: Order()
+        treat - Str():
+            Specific feture of the data
+            * Must be in data.keys()
+        tar - Str():
+            Specific feture of the data
+            * Must be in data.keys()
+        threshold - Order():
+            A value that will be compered to values in data[treat][i]
+            * Must be able to cmp to data[treat][i]
+        is_above - Bool():
+            If true:
+                creates a list of the members in data[tar],
+                such that the matching data[treat] > threshold
+            else:
+                same but, data[treat] <= threshold.
+        stat_funcs - List() :: Obj-functions:
+            List of functions in statistics.py.
+
+    Outputs - 
+        None
+
+    Main functionality - 
+        Print the stat_funcs of the values in data[tar] while taking into
+        account the matching value in data[treat].
+        using data.print_details()
     """
 
     dc = {
