@@ -4,13 +4,13 @@ import statistics
 
 def load_data(path, features):
     """
-    Inputs - 
+    Inputs -
         path :: Str():
             contains the path to the csv file
         fetures :: Str():
             the only fields that should be loaded from the csv
 
-    Outputs - 
+    Outputs -
         returns a dictionary of the dataset
     """
     df = pandas.read_csv(path)
@@ -20,7 +20,7 @@ def load_data(path, features):
 
 def filter_by_feature(data, feature, values):
     """
-    Inputs - 
+    Inputs -
         data - Dict():
             All the data
             data.keys() - Str()
@@ -30,9 +30,9 @@ def filter_by_feature(data, feature, values):
             feature to sort by
         values - Iterable():
             List of values to search for
-    Outputs - 
+    Outputs -
         2 dicts 'data1', 'data2'.
-        data1 - takes only the samples in <data> that the value of the <feature>
+        data1 - takes only the samples in <data> that the value of the feature
         in the sample is in <values>
         data2 - the complement of data1
     """
@@ -59,25 +59,26 @@ def filter_by_feature(data, feature, values):
     return data1, data2  # returns both of the dicts
 
 
-def print_details(data, features, statistic_functions):
+def print_details(data, features, stat_funcs):
     """
-    Inputs - 
+    Inputs -
         data - Dict():
             All the data
             data.keys() - Str()
             data.values() - Iterable() :: Order()
         fetures - Iterable() :: Str():
-            * All the elems in features must be in data.keys() 
-            features to run the statistic_functions on
-        statistics_functions - Iterable() :: Obj-funcs in statistics.py:
+            * All the elems in features must be in data.keys()
+            features to run the stat_funcs on
+        stat_funcs (statistic_functions) -
+            Iterable() :: Obj-funcs in statistics.py:
             Function to run
 
-    Outputs - 
-        prints the statistics of each and every feature 
+    Outputs -
+        prints the statistics of each and every feature
         using funcyions in statistics.py.
     """
     for fe in features:
         # feature: func1, func2, func3 ...
         print(
-            f"{fe}: {', '.join([str(func(data[fe])) for func in statistic_functions])}"
+            f"{fe}: {', '.join([str(func(data[fe])) for func in stat_funcs])}"
         )

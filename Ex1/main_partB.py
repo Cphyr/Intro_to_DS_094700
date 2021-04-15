@@ -58,8 +58,9 @@ def GetAxis(holiday):
     return xs, ys
 
 
-def Graph(xs, ys, fig_num):
+def Graph(xs, ys, fig_num, name):
     plt.figure(fig_num)
+    plt.title(name)
     plt.plot(xs, ys)
 
 # calc the trendline
@@ -70,15 +71,15 @@ def Graph(xs, ys, fig_num):
 
 def main():
     (xs1, ys1) = GetAxis(1)
-    Graph(xs1, ys1, 1)
+    Graph(xs1, ys1, 1, "Holiday and Winter")
 
     # WMA :
 
     w = [0.7, 0.3][::-1]
-    Graph(xs1, WMA(xs1, ys1, w), 2)
+    Graph(xs1, WMA(xs1, ys1, w), 2, "Weekday and Winter (WMA)")
 
     (xs2, ys2) = GetAxis(0)
-    Graph(xs2, ys2, 3)
+    Graph(xs2, ys2, 3, "Weekday and Winter")
 
     plt.show()
 

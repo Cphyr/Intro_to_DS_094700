@@ -1,15 +1,15 @@
-from data import *
+import data as dpy
 import pandas as pd
 
 
 def sum(values):
     """
-    Inputs - 
+    Inputs -
         values - List() :: Order():
             List of values which can be sumed
 
-    Outputs - 
-        The sum over all the elements in values 
+    Outputs -
+        The sum over all the elements in values
     """
     sum_val = 0
     # Loop over the elements in values
@@ -20,14 +20,14 @@ def sum(values):
 
 def mean(values):
     """
-    Inputs - 
+    Inputs -
         values - List() :: Order():
             List of values which can be sumed
 
-    Outputs - 
-        The mean over all the elements in values 
+    Outputs -
+        The mean over all the elements in values
 
-    Externall man-made functions - 
+    Externall man-made functions -
         sum() - return the sum of the elements in values
     """
     return sum(values) / len(values)
@@ -35,12 +35,12 @@ def mean(values):
 
 def median(values):
     """
-    Inputs - 
+    Inputs -
         values - List() :: Order():
             List of values which can be sumed
 
-    Outputs - 
-        The median of the elements in values 
+    Outputs -
+        The median of the elements in values
     """
     length = len(values)
     sort_vals = sorted(values)  # get a new, sorted, list
@@ -60,7 +60,7 @@ def population_statistics(
     stat_funcs,
 ):
     """
-    Inputs - 
+    Inputs -
         fea_des - Str():
             Description of the data needed for the
             calculations of the stat_funcs.
@@ -87,10 +87,10 @@ def population_statistics(
         stat_funcs - List() :: Obj-functions:
             List of functions in statistics.py.
 
-    Outputs - 
+    Outputs -
         None
 
-    Main functionality - 
+    Main functionality -
         Print the stat_funcs of the values in data[tar] while taking into
         account the matching value in data[treat].
         using data.print_details()
@@ -108,7 +108,7 @@ def population_statistics(
 
     # filters the needed features from data (dt)
     for x in filter(lambda i: i.lower() in dc.keys(), fea_des.split(" ")):
-        dt = filter_by_feature(dt, dc[x.lower()][0], dc[x.lower()][1])[0]
+        dt = dpy.filter_by_feature(dt, dc[x.lower()][0], dc[x.lower()][1])[0]
 
     # Not allowed, but much prettier code
     # d = reduce(
@@ -117,7 +117,7 @@ def population_statistics(
     #     data,
     # )
 
-    print_details(
+    dpy.print_details(
         {tar: [x for x, y in zip(dt[tar], dt[treat]) if (
             is_above ^ (y <= threshold))]},
         [tar],
