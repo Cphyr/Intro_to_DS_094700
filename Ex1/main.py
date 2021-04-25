@@ -35,11 +35,16 @@ def main(argv):
 
     threshold = 13.0
 
+    winter_data, _ = dt.filter_by_feature(
+        data, dc["winter"][0], dc["winter"][1])
+    holiday_data, weekday_data = dt.filter_by_feature(
+        winter_data, dc["holiday"][0], dc["holiday"][1])
+
     print(f"If t1<={threshold}, then:")
     print("Winter holiday records:")
     st.population_statistics(
         "Winter holiday records",
-        data,
+        holiday_data,
         "t1",
         "cnt",
         threshold,
@@ -49,7 +54,7 @@ def main(argv):
     print("Winter weekday records:")
     st.population_statistics(
         "Winter weekday records",
-        data,
+        weekday_data,
         "t1",
         "cnt",
         threshold,
@@ -61,7 +66,7 @@ def main(argv):
     print("Winter holiday records:")
     st.population_statistics(
         "Winter holiday records",
-        data,
+        holiday_data,
         "t1",
         "cnt",
         threshold,
@@ -71,7 +76,7 @@ def main(argv):
     print("Winter weekday records:")
     st.population_statistics(
         "Winter weekday records",
-        data,
+        weekday_data,
         "t1",
         "cnt",
         threshold,

@@ -96,30 +96,16 @@ def population_statistics(
         using data.print_details()
     """
 
-    dc = {
-        "spring": ("season", [0]),
-        "summer": ("season", [1]),
-        "autumn": ("season", [2]),
-        "winter": ("season", [3]),
-        "holiday": ("is_holiday", [1]),
-        "weekend": ("is_weekend", [1]),
-        "weekday": ("is_holiday", [0]),
-    }
-
-    # filters the needed features from data (dt)
-    for x in filter(lambda i: i.lower() in dc.keys(), fea_des.split(" ")):
-        dt = dpy.filter_by_feature(dt, dc[x.lower()][0], dc[x.lower()][1])[0]
-
     # Not allowed, but much prettier code
     # d = reduce(
     #     lambda ac, val: filter_by_feature(ac, val[0], val[1])[0],
     #     [dc[i.lower()] for i in fea_des.split(" ") if i.lower() in dc.keys()],
     #     data,
     # )
-
+    new_target_data = [x for x, y in zip(dt[tar], dt[treat]) if (
+        is_above ^ (y <= threshold))]
     dpy.print_details(
-        {tar: [x for x, y in zip(dt[tar], dt[treat]) if (
-            is_above ^ (y <= threshold))]},
+        {tar: new_target_data},
         [tar],
         stat_funcs,
-    )  # it's exactly 115 chars (without tabs of course), hence, it's one line
+    )
