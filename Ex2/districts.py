@@ -1,4 +1,5 @@
 import data
+from data import Data
 
 
 class Districts:
@@ -34,17 +35,17 @@ class Districts:
         for fe in features:
             # feature: func1, func2, func3 ...
             print(
-                f"{fe}: {', '.join([str(func(self.data[fe])) for func in stat_funcs])}"
+                f"{fe}: {', '.join([str(func(self.data.data[fe])) for func in stat_funcs])}"
             )
 
     def determine_day_type(self):
-        resigned_healed = self.data["resigned_healed"]
-        new_positives = self.data["new_positives"]
+        resigned_healed = self.data.data["resigned_healed"]
+        new_positives = self.data.data["new_positives"]
 
         vals = [int((x - y) > 0)
                 for x, y in zip(resigned_healed, new_positives)]
-        self.data["day_type"] = vals
+        self.data.data["day_type"] = vals
 
     def get_districts_class(self):
         self.determine_day_type()
-        self.data = self.data.filter_by_feature("day_type", [1])[0]
+        self.data.data = self.data.data.filter_by_feature("day_type", [1])[0]
