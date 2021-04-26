@@ -4,6 +4,7 @@ from data import Data
 
 class Districts:
 
+    #defines the 'data' feature
     def __init__(self, dt):
         self.data = dt
 
