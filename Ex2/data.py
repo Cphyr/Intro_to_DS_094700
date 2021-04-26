@@ -4,13 +4,38 @@ import pandas
 class Data:
 
     def __init__(self, path):
+        """
+        Inputs- 
+            self -Data object
+            path- String()
+                A path to the csv file
+        Creates the Data object.
+        Creates the property 'data' as a dictionary which is in the path given
+        """
         df = pandas.read_csv(path)
         self.data = df.to_dict(orient="list")
 
     def get_all_districts(self):
+        """
+        Inputs- 
+            self -Data object :
+                All the data
+                self.data.keys() - Str()
+                self.data.values() - Iterable() :: Order()
+        Returns- the value of data["denominazione_region"]
+        which is all of the districts
+        """
         return self.data["denominazione_region"]
 
     def set_districts_data(self, districts):
+        """
+        Inputs- 
+            self -Data object :
+                All the data
+                self.data.keys() - Str()
+                self.data.values() - Iterable() :: Order()
+        Deletes all of the districts that don't start with a charecter in 'districts'
+        """
         self.data = self.filter_by_feature(
             "denominazione_region", districts)[0]
 
