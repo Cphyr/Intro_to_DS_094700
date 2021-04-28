@@ -5,28 +5,26 @@ from data import Data
 class Districts:
 
     def __init__(self, dt):
-    """
-    Inputs-
-        self.data -Data object :
-            All the data
-            self.data.data.keys() - Str()
-            self.data.data.values() - Iterable() :: Order()
-        dt- Data object
-    adds dt as a property. 
-    """
+        """Inputs-
+            self.data -Data object :
+                All the data
+                self.data.data.keys() - Str()
+                self.data.data.values() - Iterable() :: Order()
+            dt- Data object
+        adds dt as a property"""
         self.data = dt
 
     def filter_districts(self, letters):
         """
-        Inputs- 
-            self.data -Data object :
+        Inputs-
+            self.data -Data object:
                 All the data
                 self.data.data.keys() - Str()
                 self.data.data.values() - Iterable() :: Order()
             letters- Iterable():
                 List of chars
-        Changes the Data object such that it's districts 
-        will only have districts starting with a letter in 'letters' 
+        Changes the Data object such that it's districts
+        will only have districts starting with a letter in 'letters'
         """
         new_dist = []
         for dist in self.data.get_all_districts():
@@ -60,14 +58,14 @@ class Districts:
 
     def determine_day_type(self):
         """
-        Inputs- 
-            self.data -Data object :
+        Inputs-
+            self.data -Data object:
                 All the data
                 self.data.data.keys() - Str()
                 self.data.data.values() - Iterable() :: Order()
          Adds a key 'day_type' to the self.data.data.
-         self.data.data[day_type] - Iterable(). 
-         each containing if the matching day is green or not. 
+         self.data.data[day_type] - Iterable().
+         each containing if the matching day is green or not.
         """
         resigned_healed = self.data.data["resigned_healed"]
         new_positives = self.data.data["new_positives"]
@@ -78,7 +76,7 @@ class Districts:
 
     def get_districts_class(self):
         """
-        Inputs- 
+        Inputs-
             self.data -Data object :
                 All the data
                 self.data.data.keys() - Str()
