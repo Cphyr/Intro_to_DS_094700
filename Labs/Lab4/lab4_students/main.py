@@ -6,6 +6,22 @@ from metrics import accuracy_score
 from normalization import *
 
 
+def load_data_debug():
+    input_path = "in1"
+
+    if not os.path.exists(input_path):
+        print('Input file does not exist')
+        exit(1)
+
+    points = []
+    with open(input_path, 'r') as f:
+        for index, row in enumerate(f.readlines()):
+            row = row.strip()
+            values = row.split(',')
+            points.append(Point(str(index), values[:-1], values[-1]))
+    return points
+
+
 def load_data():
     """
     Loads data from path in first argument
@@ -30,14 +46,23 @@ def load_data():
 
 
 def run_knn(points):
-    m = KNN(5)
+    """m = KNN(5)
     m.train(points)
     print(f'predicted class: {m.predict(points[0])}')
     print(f'true class: {points[0].label}')
     cv = CrossValidation()
-    cv.run_cv(points, 10, m, accuracy_score)
+    cv.run_cv(points, 10, m, accuracy_score)"""
+    run_knn_question1(points)
+
+
+def run_knn_question1(points):
+    m = KNN(1)
+    m.train(points)
+    m.predict(points)
+
+    print(accuracy_score([p.label for p in points], m.predict(points)))
 
 
 if __name__ == '__main__':
-    loaded_points = load_data()
+    loaded_points = load_data_debug()
     run_knn(loaded_points)

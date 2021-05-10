@@ -43,7 +43,8 @@ class CrossValidation:
             score = scoring_function(real, predicted)
             average_score += score
             if print_fold_score:
-                print('{} of fold {} : {:.2f}'.format(scoring_function.__name__, out_fold_index, score))
+                print('{} of fold {} : {:.2f}'.format(
+                    scoring_function.__name__, out_fold_index, score))
 
         average_score /= n_folds
         if print_final_score:
