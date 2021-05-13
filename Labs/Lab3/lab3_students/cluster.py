@@ -52,9 +52,10 @@ class Cluster:
 
         # find median
         for i in range(number_of_coordinates):
+            print([x.coordinates[i] for x in self._points])
             new_coordinates[i] = median(
                 [x.coordinates[i] for x in self._points])
-
+        print(new_coordinates)
         self._centroid.set_coordinates(new_coordinates)
 
         is_changed = (old_centroid != tuple(self._centroid.coordinates))

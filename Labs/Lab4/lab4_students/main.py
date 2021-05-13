@@ -52,25 +52,62 @@ def run_knn(points):
     print(f'true class: {points[0].label}')
     cv = CrossValidation()
     cv.run_cv(points, 10, m, accuracy_score)"""
-    run_knn_question1(points)
-    run_knn_question2(points)
+    question1(points)
+    best_k = question2(points)
+    question3(points, best_k)
+    question4(points)
 
 
-def run_knn_question1(points):
+def question1(points):
     m = KNN(1)
     m.train(points)
     m.predict(points)
+    #print(accuracy_score([p.label for p in points], m.predict(points)))
 
-    print(accuracy_score([p.label for p in points], m.predict(points)))
 
-
-def run_knn_question2(points):
+def question2(points):
+    best_k = 0
+    best_accuracy = 0
     # Loop over the values of k
     for k in range(1, 30+1):  # range(<inclusive>, <exclusive>)
         m = KNN(k)
         num_blocks = len(points)
         cv = CrossValidation()
-        cv.run_cv(points, num_blocks, m, accuracy_score)
+        currentscore = cv.run_cv(
+            points, num_blocks, m, accuracy_score, print_final_score=False)
+        if(currentscore > best_accuracy):
+            best_accuracy = currentscore
+            best_k = k
+    # print(f"K={best_k}")
+    return best_k
+
+
+def question3(points, best_k):
+    print("Question 3:")
+    print(f"K={best_k}")
+    m = KNN(best_k)
+    cv = CrossValidation()
+    for n in [2, 10, 20]:
+        print(f"{n}-fold-cross-validation:")
+        cv.run_cv(
+            points, n, m, accuracy_score, print_final_score=False, print_fold_score=True)
+
+
+def question4(points):
+    print("Question 4:")
+    for k in [5, 7]:
+        print(f"K={k}")
+        m = KNN(k)
+        cv = CrossValidation()
+
+        shortcuts_dict = {0: "DummyNormalizer", 1: "SumNormalizer",
+                          2: "MinMaxNormalizer", 3: "ZNormalizer"}
+
+        for i, norm in enumerate([DummyNormalizer(), SumNormalizer(), MinMaxNormalizer(), ZNormalizer()]):
+            avg_score = cv.run_cv(norm.transform(
+                points), 2, m, accuracy_score, print_final_score=False, print_fold_score=True)
+            print(
+                f"Accuracy of {shortcuts_dict[i]} is {avg_score}", end='' if k == 7 and i == 3 else '\n\n')
 
 
 if __name__ == '__main__':

@@ -33,9 +33,12 @@ class KMeans:
                 self._clusters[closest_cluster_id].add_point(point)
 
             # Recompute centroids and look if change happened
+            for cluster in self._clusters:
+                print(cluster.compute_centroid())
             changes = [cluster.compute_centroid()
                        for cluster in self._clusters]
             if sum(changes) == 0:  # if everyone is False then sum is 0
+                print([cluster._centroid for cluster in self._clusters])
                 break
 
     def print_results(self, random_seed):
