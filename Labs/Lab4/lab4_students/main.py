@@ -53,6 +53,7 @@ def run_knn(points):
     cv = CrossValidation()
     cv.run_cv(points, 10, m, accuracy_score)"""
     run_knn_question1(points)
+    run_knn_question2(points)
 
 
 def run_knn_question1(points):
@@ -61,6 +62,15 @@ def run_knn_question1(points):
     m.predict(points)
 
     print(accuracy_score([p.label for p in points], m.predict(points)))
+
+
+def run_knn_question2(points):
+    # Loop over the values of k
+    for k in range(1, 30+1):  # range(<inclusive>, <exclusive>)
+        m = KNN(k)
+        num_blocks = len(points)
+        cv = CrossValidation()
+        cv.run_cv(points, num_blocks, m, accuracy_score)
 
 
 if __name__ == '__main__':
