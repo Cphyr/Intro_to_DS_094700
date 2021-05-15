@@ -45,17 +45,19 @@ class MinMaxNormalizer:
         Returns: 
             new_points: Iterable of Point objects. The coordinates of each points is the MinMax    
         """
-        min_dic = {} #dictionary of the min in the certain dimension
-        max_dic = {} #dictionary of the max in the certain dimension
-        new_points =  #creates the list for the new points
-        all_coordinates = [p.coordinates for p in points] #creates list of all coordinates
+        min_dic = {}  # dictionary of the min in the certain dimension
+        max_dic = {}  # dictionary of the max in the certain dimension
+        new_points = []  # creates the list for the new points
+        # creates list of all coordinates
+        all_coordinates = [p.coordinates for p in points]
         dimensions = len(all_coordinates[0])
-        for i in range(dimensions): #finds out the min and max in all of the dimensions
+        for i in range(dimensions):  # finds out the min and max in all of the dimensions
             values = [x[i] for x in all_coordinates]
             min_dic[i] = min(values)
             max_dic[i] = max(values)
 
-        for i, p in enumerate(points): #calculates the min-max transformation and adds the new point to the list
+        # calculates the min-max transformation and adds the new point to the list
+        for i, p in enumerate(points):
             current = p.coordinates
             new_points.append(Point(p.name, [(current[i]-min_dic[i])/(max_dic[i]-min_dic[i])
                                              for i in range(dimensions)], p.label))
@@ -67,21 +69,30 @@ class SumNormalizer:
         pass
 
     def transform(self, points):
+        """
+        :param points: Iterable() of Point() to be transformed
+        :return: List() of Point()
+        """
         new_points = []
-        all_coordinates = [p.coordinates for p in points]
-        values = []
 
-        denoms = []
+        # Create list. Each elem is a list of the coordinates of each point
+        all_coordinates = [p.coordinates for p in points]
+
+        denoms = []  # list of the denominators of each dimention
         for i in range(len(all_coordinates[0])):
             vals = [x[i] for x in all_coordinates]
             denoms.append(sum(map(abs, vals)))
 
         num_dims = len(denoms)
 
-        for indx, p in enumerate(points):
+        for p in points:  # Iterate of the points
             new_coor = []
+
+            # Compute normilzed value of each coordinate
             for i in range(num_dims):
                 new_coor.append(p.coordinates[i]/denoms[i])
+
+            # Append to the new list of points
             new_points.append(Point(p.name, new_coor, p.label))
 
         return new_points
