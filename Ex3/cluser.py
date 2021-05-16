@@ -4,3 +4,4 @@ class Cluster:
         self.samples = samples
 
     def merge(self, other):
+        pass
