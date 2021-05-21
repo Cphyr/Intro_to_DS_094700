@@ -1,4 +1,5 @@
-from sample import compute_euclidean_distance as dist
+from sample import *
+from cluster import *
 
 
 class Link:
@@ -8,6 +9,8 @@ class Link:
 
 
 class SingleLink(Link):
+    def __init__(self):
+        self.name = "single link"
 
     def compute(self, cluster, other):
         """
@@ -18,8 +21,12 @@ class SingleLink(Link):
         Returns:
             The shortest distance from a sample in 'cluster' to a sample in 'other'
         """
-        # Determines the disteance between the first points as min
-        min = cluster[0].dist(other[0])
+        #print([x.s_id for x in cluster.samples])
+
+        return min([x.dist(y) for x in cluster.samples for y in other.samples])
+
+        """# Determines the disteance between the first points as min
+        min = cluster.samples[0].dist(other[0])
         # Loops through every pair of samples (one from each cluster object)
         for my_sample in cluster.samples:
             for other_sample in other.samples:
@@ -28,8 +35,12 @@ class SingleLink(Link):
                 if current < min:
                     min = current
 
+        return min"""
+
 
 class CompleteLink(Link):
+    def _init_(self):
+        self.name = "complete link"
 
     def compute(self, cluster, other):
         """

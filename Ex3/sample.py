@@ -6,3 +6,6 @@ class Sample:
 
     def compute_euclidean_distance(self, other):
         return sum([(x-y) ** 2 for x, y in zip(self.genes, other.genes)]) ** 0.5
+
+    def dist(self, other):
+        return self.compute_euclidean_distance(other)

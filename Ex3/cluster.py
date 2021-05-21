@@ -1,5 +1,5 @@
 class Cluster:
-    def _init_(self, c_id, samples):
+    def __init__(self, c_id, samples):
         self.c_id = c_id
         self.samples = samples
 
@@ -16,3 +16,9 @@ class Cluster:
         # Sorts the list by the s_id of the Samples
         self.samples.sort(key=lambda sample: sample.s_id)
         del other  # Deletes the other cluster
+
+    def print_details(self, silhouette):
+        dominant_label = (max(set(self.samples), key=self.samples.count)).label
+
+        print(
+            f"Cluster {self.c_id}: {sorted([x.s_id for x in self.samples])}, dominant label = {dominant_label}, silhouette = {silhouette:.3f}")
