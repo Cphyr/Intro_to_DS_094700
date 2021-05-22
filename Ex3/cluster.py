@@ -2,6 +2,7 @@ class Cluster:
     def __init__(self, c_id, samples):
         self.c_id = c_id
         self.samples = samples
+        self.length = len(samples)
 
     def merge(self, other):
         """
@@ -15,6 +16,7 @@ class Cluster:
         self.samples = self.samples + other.samples  # Adds the lists together
         # Sorts the list by the s_id of the Samples
         self.samples.sort(key=lambda sample: sample.s_id)
+        self.length += other.length
         del other  # Deletes the other cluster
 
     def print_details(self, silhouette):

@@ -1,5 +1,6 @@
 from sample import *
 from cluster import *
+import math
 
 
 class Link:
@@ -8,11 +9,18 @@ class Link:
         pass
 
 
+def pair_2_key(first, second):
+    sort_pair = sorted([first, second], key=lambda x: x.c_id)
+    new_first = sort_pair[0]
+    new_second = sort_pair[1]
+    return f"{new_first.c_id} {new_first.length} {new_second.c_id} {new_second.length}"
+
+
 class SingleLink(Link):
     def __init__(self):
         self.name = "single link"
 
-    def compute(self, cluster, other):
+    def compute(self, cluster, other, dists_dict, clusters_dict):
         """
         Params:
             self- SingleLink object
@@ -21,28 +29,27 @@ class SingleLink(Link):
         Returns:
             The shortest distance from a sample in 'cluster' to a sample in 'other'
         """
-        #print([x.s_id for x in cluster.samples])
+        key = pair_2_key(cluster, other)
+        if key in clusters_dict.keys():
+            return clusters_dict[key]
 
-        return min([x.dist(y) for x in cluster.samples for y in other.samples])
-
-        """# Determines the disteance between the first points as min
-        min = cluster.samples[0].dist(other[0])
+        min = math.inf
         # Loops through every pair of samples (one from each cluster object)
         for my_sample in cluster.samples:
             for other_sample in other.samples:
-                current = my_sample.dist(other_sample)
+                current = dists_dict[str(
+                    sorted([my_sample.s_id, other_sample.s_id]))]
                 # If the current distance is smallest than the min, change the min
                 if current < min:
                     min = current
-
-        return min"""
+        return min
 
 
 class CompleteLink(Link):
-    def _init_(self):
+    def __init__(self):
         self.name = "complete link"
 
-    def compute(self, cluster, other):
+    def compute(self, cluster, other, dists_dict, clusters_dict):
         """
         Params:
             self- CompleteLink object
@@ -51,6 +58,13 @@ class CompleteLink(Link):
         Returns:
             The biggest distance from a sample in 'cluster' to a sample in 'other'
         """
-        # compute the same as explained in SingleLink.compute() but returns the maximum distance
-        # instead of the minimum distance
-        return max([x.dist(y) for x in cluster.samples for y in other.samples])
+        max = 0
+        # Loops through every pair of samples (one from each cluster object)
+        for my_sample in cluster.samples:
+            for other_sample in other.samples:
+                current = dists_dict[str(
+                    sorted([my_sample.s_id, other_sample.s_id]))]
+                # If the current distance is smallest than the min, change the min
+                if current > max:
+                    max = current
+        return max
