@@ -22,5 +22,10 @@ class Cluster:
     def print_details(self, silhouette):
         dominant_label = (max(set(self.samples), key=self.samples.count)).label
 
+        # This would probably solve the problem
+        # of 2 labels with the same count
+        # it will print the one that comes first in an alphabetical order
+        label_list = sorted([s.label for s in self.samples])
+        dominant_label = (max(label_list, key=lambda l: label_list.count(l)))
         print(
             f"Cluster {self.c_id}: {sorted([x.s_id for x in self.samples])}, dominant label = {dominant_label}, silhouette = {silhouette:.3f}")

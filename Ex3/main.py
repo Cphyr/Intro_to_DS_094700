@@ -6,8 +6,8 @@ from agglomerative_clustering import Agglomerative_Cluster
 
 
 def main(argv):
-    data = Data(argv[1])
-    #data = Data("Leukemia_sample.csv")
+    #data = Data(argv[1])
+    data = Data("Leukemia_sample.csv")
     single = SingleLink()
     complete = CompleteLink()
     max_clus = 7

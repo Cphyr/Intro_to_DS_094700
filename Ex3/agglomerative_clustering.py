@@ -145,7 +145,7 @@ class Agglomerative_Cluster:
             number_of_clusters -= 1
 
         self.clusters.sort(key=lambda x: x.c_id)
-        print("complete link")
+        print(self.link.name)
 
         s_dict = self.compute_summery_silhoeutte()
         for cluster in self.clusters:
