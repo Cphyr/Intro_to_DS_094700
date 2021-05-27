@@ -20,8 +20,6 @@ class Cluster:
         del other  # Deletes the other cluster
 
     def print_details(self, silhouette):
-        dominant_label = (max(set(self.samples), key=self.samples.count)).label
-
         # This would probably solve the problem
         # of 2 labels with the same count
         # it will print the one that comes first in an alphabetical order
