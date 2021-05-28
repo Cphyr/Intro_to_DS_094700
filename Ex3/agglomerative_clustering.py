@@ -33,7 +33,7 @@ def get_dist_of_pairs(samples):
     """
     dists_dict = {}
     # Loops through every pair and adds their distance to a dict
-    for i, first in enumerate(samples): 
+    for i, first in enumerate(samples):
         for second in samples[i:]:
             dists_dict[str(sorted([first.s_id, second.s_id]))
                        ] = first.compute_euclidean_distance(second)
@@ -163,7 +163,7 @@ class Agglomerative_Cluster:
             if len(clus.samples) == 1:
                 # If the cluster has only one sample, the sample's
                 # silhouette is 0
-                silh_dict[clus.samples[0].s_id] = 0 
+                silh_dict[clus.samples[0].s_id] = 0
                 continue
             for sam in clus.samples:
                 # Calculate the silhouette of every sample in the cluster.
@@ -195,12 +195,12 @@ class Agglomerative_Cluster:
         return sum_silh_dict
 
     def compute_rand_index(self):
-     """
-     Params:
-        self: Agglomerative_Cluster object
-     Returns:
-        the RI as defined
-    """
+        """
+        Params:
+            self: Agglomerative_Cluster object
+        Returns:
+            the RI as defined
+        """
         TP = TN = FP = FN = 0
         samples = []
         for clus in self.clusters:
@@ -234,15 +234,15 @@ class Agglomerative_Cluster:
             max_clusters: number of clusters in the end
         """
         number_of_clusters = len(self.clusters)
-        if(max_clusters > number_of_clusters): 
+        if(max_clusters > number_of_clusters):
             # If max_clusters is too big, return -1
             return -1
-        
+
         # While there are more clusters than max_clusters
         while(number_of_clusters > max_clusters):
             # Finds the pair of clusters with the shortest distance
             tup = min([(x, y, self.link.compute(x, y, self.pairs_dist, self.clusters_dist)) for i, x in enumerate(
-                self.clusters) for y in self.clusters[i+1:]], key=lambda x: x[-1]) 
+                self.clusters) for y in self.clusters[i+1:]], key=lambda x: x[-1])
             # merge the clusters
             tup[0].merge(tup[1])
             self.clusters.remove(tup[1])
