@@ -4,12 +4,20 @@ import math
 
 
 class Link:
-
+    # abstract function.
     def compute(self, cluter, other):
         pass
 
 
 def pair_2_key(first, second):
+    """
+    Params:
+        first: Sample object
+        second: Sample object
+    Returns:
+        returns string that is uniqe to the clusters and their current state.
+    """
+
     sort_pair = sorted([first, second], key=lambda x: x.c_id)
     new_first = sort_pair[0]
     new_second = sort_pair[1]

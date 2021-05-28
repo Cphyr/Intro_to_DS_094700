@@ -20,6 +20,15 @@ class Cluster:
         del other  # Deletes the other cluster
 
     def print_details(self, silhouette):
+        """
+        Params:
+            silhoette: the value of the silhouette to be printed.
+
+        The function prints the cluster's details:
+            id, samples, dominant label and the silhoette
+
+        The dominant label is determand by the count of that label, sorted alphabetically.
+        """
         # This would probably solve the problem
         # of 2 labels with the same count
         # it will print the one that comes first in an alphabetical order

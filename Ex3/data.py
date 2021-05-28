@@ -12,8 +12,10 @@ class Data:
         Params:
             self: Data object
         """
+
         genes_keys = list(filter(lambda x: x not in [
             "samples", "type"], self.data.keys()))  # Only the keys to the genes
+
         num_of_lines = len(self.data['samples'])
 
         new_list = []
