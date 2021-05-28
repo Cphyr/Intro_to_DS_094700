@@ -134,7 +134,7 @@ def question4(points):
 
             # Just a fancy printing, to make it look like the wanted output file
             print(
-                f"Accuracy of {shortcuts_dict[i]} is {avg_score}", end='' if k == 7 and i == 3 else '\n\n')
+                f"Accuracy of {shortcuts_dict[i]} is {avg_score:.2f}", end='' if k == 7 and i == 3 else '\n\n')
 
 
 if __name__ == '__main__':
