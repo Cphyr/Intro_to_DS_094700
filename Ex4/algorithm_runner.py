@@ -2,15 +2,16 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neighbors import NearestCentroid
 from sklearn.model_selection import cross_validate
 
+
 class AlgorithmRunner():
 
     def __init__(self, str_algo):
         if str_algo == "KNN":
-            algorithm = KNeighborsClassifier
+            model = KNeighborsClassifier
         elif str_algo == "NC":
-            algorithm = NearestCentroid
+            model = NearestCentroid
         else:
-            Exception(f"{str_algo} isn't a valid algorithm")
+            raise ValueError(f"{str_algo} isn't a valid algorithm")
 
     def calc_acc(data, preds):
         pass
@@ -21,9 +22,11 @@ class AlgorithmRunner():
     def calc_recall(data, preds):
         pass
 
-    def run(self, Data, folds=5):
-        precision = calc_precision(data, preds)
-        recall = calc_recall(data, preds)
-        accuracy = calc_acc(data, preds)
+    def run(self, df, folds=5):
 
-        cv = Data.split_to_k_folds(folds)
+        X = df.loc[:, df.columns != 'salary']
+        y = df.loc[:, df.columns == 'salary']
+
+        cv = df.split_to_k_folds(folds)
+        cv_results = cross_validate(self.model, X, y, scoring=[
+                                    "precision", "recall", "accuracy"], cv=cv)
