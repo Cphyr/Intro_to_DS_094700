@@ -24,3 +24,21 @@ if __name__ == '__main__':
     test_set, _ = data.build_set("boolean", test_file_name)
     classifier = rocchio_classifier.RocchioClassifier(train_set)
     print("Boolean:", '{:.3f}'.format(calc_accuracy(test_set, classifier)))
+
+    # tf
+    train_set, _ = data.build_set("tf", train_file_name)
+    test_set, _ = data.build_set("tf", test_file_name)
+    classifier = rocchio_classifier.RocchioClassifier(train_set)
+    print("tf:", '{:.3f}'.format(calc_accuracy(test_set, classifier)))
+
+    # tfidf
+    train_set, _ = data.build_set("tfidf", train_file_name)
+    test_set, _ = data.build_set("tfidf", test_file_name)
+    classifier = rocchio_classifier.RocchioClassifier(train_set)
+    print("tfidf:", '{:.3f}'.format(calc_accuracy(test_set, classifier)))
+
+    # tfidf
+    train_set, _ = data.build_set("tfidf", train_file_name)
+    test_set, _ = data.build_set("tfidf", test_file_name)
+    classifier = rocchio_classifier.RocchioClassifier(train_set, cosine_sim=True)
+    print("tfidf with cosine similarity:", '{:.3f}'.format(calc_accuracy(test_set, classifier)))

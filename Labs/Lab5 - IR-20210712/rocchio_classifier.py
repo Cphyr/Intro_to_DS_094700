@@ -3,10 +3,11 @@ import sys
 
 
 class RocchioClassifier:
-    def __init__(self, train_set):
+    def __init__(self, train_set, cosine_sim=False):
         self.training_set = train_set
         self.class_centroids = {}
         self.training()
+        self.cosine_sim = cosine_sim
 
     def training(self):
         class_size = {}
@@ -38,8 +39,19 @@ class RocchioClassifier:
         lowest_distance = sys.float_info.max
         for class_name, class_vector in self.class_centroids.items():
             distance = self.euclidean_dist(vector, class_vector)
+            if (self.cosine_sim):
+                distance = self.cosine_dist(vector, class_vector)
             if distance < lowest_distance:
                 winner_class = class_name
                 lowest_distance = distance
 
         return winner_class
+
+    @staticmethod
+    def cosine_dist(v1, v2):
+
+        numi = sum([x * y for x,y in zip(v1, v2)])
+        denum = (sum([(x**2) for x in v1]) * sum([(x**2) for x in v2])) ** 0.5
+
+
+        return -numi / denum

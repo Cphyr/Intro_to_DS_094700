@@ -6,6 +6,7 @@ class FileReader:
     def __init__(self, input_file):
         self.file = input_file
         self.words = {}
+        self.n = 0
         self.df = {}
         self.stop_words = []
         self.create_stop_words_list()
@@ -37,6 +38,7 @@ class FileReader:
         with open(self.file, 'r') as reader: # open the file "file"
             for line in reader: # for each line in file
                 seen_in_this_line = []
+                self.n += 1
                 for word in line.split("\t")[0].split(): # for each word in the line
                     word = self.pre_process_word(word)
                     if word == '':
@@ -71,9 +73,55 @@ class FileReader:
         return doc_set, reg_representation
 
     def build_set_tf(self, file_to_vector):
-        # TODO: replace with your code
-        return self.build_set_boolean(file_to_vector)
+        doc_set = {}
+        reg_representation = {}
+        index = 0
+        with open(file_to_vector, 'r') as reader:
+            for line in reader:
+                vec = len(self.words)*[0,]  # creates a zeros vector of that len
+                for word in line.split("\t")[0].split():
+                    word = self.pre_process_word(word)
+                    if word == '':
+                        continue
+                    vec[self.words[word]] += 1
+                #map(lambda x: 0 if (x == 0) else (1 + math.log10(x)), vec)
+                for i in range(len(vec)):
+                    if vec[i] != 0:
+                        vec[i] = 1 + math.log10(vec[i])
+                doc_class = line.split("\t")[1].rstrip()
+                vec.append(doc_class)
+                doc_set['doc'+str(index)] = vec
+                reg_representation['doc' + str(index)] = line.split("\t")[0]
+                index += 1
+        return doc_set, reg_representation
 
     def build_set_tfidf(self, file_to_vector):
-        # TODO: replace with your code
-        return self.build_set_boolean(file_to_vector)
+        doc_set = {}
+        reg_representation = {}
+        index = 0
+        with open(file_to_vector, 'r') as reader:
+            for line in reader:
+                tf = len(self.words)*[0,]
+                vec = len(self.words)*[0,]  # creates a zeros vector of that len
+                for word in line.split("\t")[0].split():
+                    word = self.pre_process_word(word)
+                    if word == '':
+                        continue
+                    tf[self.words[word]] += 1
+                for word in line.split("\t")[0].split():
+                    word = self.pre_process_word(word)
+                    if word == '':
+                        continue
+                    vec[self.words[word]] = tf[self.words[word]] * math.log10(self.n / self.df[word])
+                doc_class = line.split("\t")[1].rstrip()
+                vec.append(doc_class)
+                doc_set['doc'+str(index)] = vec
+                reg_representation['doc' + str(index)] = line.split("\t")[0]
+                index += 1
+
+
+
+
+
+
+        return doc_set, reg_representation
